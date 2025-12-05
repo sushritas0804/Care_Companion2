@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - Health Insight | Care Companion</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles for chat page */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .chat-header {
+            background-color: rgb(89, 171, 169);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background-color: rgba(255, 253, 230, 0.3);
+        }
+        
+        .chat-message {
+            margin-bottom: 1.5rem;
+            display: flex;
+        }
+        
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        
+        .chat-message.ai {
+            justify-content: flex-start;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 1rem;
+            border-radius: 12px;
+            position: relative;
+        }
+        
+        .chat-message.user .message-content {
+            background-color: #F2B42D;
+            color: rgb(55, 85, 34);
+            border-bottom-right-radius: 4px;
+        }
+        
+        .chat-message.ai .message-content {
+            background-color: rgba(89, 171, 169, 0.1);
+            color: rgb(55, 85, 34);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-sender {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            padding: 1.5rem;
+            background-color: white;
+            border-top: 1px solid rgba(89, 171, 169, 0.2);
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid rgba(89, 171, 169, 0.3);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin-right: 1rem;
+        }
+        
+        .chat-input:focus {
+            outline: none;
+            border-color: #F2B42D;
+            box-shadow: 0 0 0 3px rgba(242, 180, 45, 0.2);
+        }
+        
+        .example-prompts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .prompt-card {
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid rgba(89, 171, 169, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .prompt-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(89, 171, 169, 0.15);
+            border-color: #F2B42D;
+        }
+        
+        .prompt-title {
+            color: rgb(55, 85, 34);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .prompt-text {
+            color: rgba(55, 85, 34, 0.8);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Care Companion</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="chat.html" class="nav-link active">Chat</a>
+                <a href="medications.html" class="nav-link">Medications</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="disclaimer.html" class="nav-link">Disclaimer</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="signup.html" class="nav-link signup-btn">Sign Up</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Chat Content -->
+    <section class="content-page">
+        <div class="container">
+            <!-- Authentication Required Message (hidden when logged in) -->
+            <div id="authRequired" class="auth-required" style="display: none;">
+                <div class="content-card" style="text-align: center;">
+                    <h2>Authentication Required</h2>
+                    <p>Please log in to access the symptom checker and get personalized medication recommendations.</p>
+                    <div class="auth-actions">
+                        <a href="login.html" class="btn btn-primary">Login</a>
+                        <a href="signup.html" class="btn btn-secondary">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Interface (shown when logged in) -->
+            <div id="chatInterface">
+                <div class="content-card">
+                    <h2>Symptom Checker & Chat</h2>
+                    <p>Describe your symptoms to get personalized OTC medication recommendations.</p>
+                    
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <h3>Health Insight Assistant</h3>
+                            <p>Describe your symptoms for personalized recommendations</p>
+                        </div>
+                        
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- AI Welcome Message -->
+                            <div class="chat-message ai">
+                                <div class="message-content">
+                                    <div class="message-sender">Health Insight</div>
+                                    <div class="message-text">Hello! I'm your AI-powered OTC medication assistant. Please describe your symptoms (e.g., "I have a headache and mild fever") and I'll provide safe recommendations. Remember, I'm not a substitute for professional medical advice.</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input-container">
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Describe your symptoms here...">
+                            <button class="btn btn-primary" id="chatSubmit">
+                                <i class="fas fa-paper-plane"></i> Send
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="example-prompts">
+                        <div class="prompt-card" onclick="usePrompt('I have a headache and mild fever')">
+                            <div class="prompt-title">Headache & Fever</div>
+                            <div class="prompt-text">Get recommendations for headache with mild fever symptoms</div>
+                        </div>
+                        
+                        <div class="prompt-card" onclick="usePrompt('I have a cough and runny nose')">
+                            <div class="prompt-title">Cough & Cold</div>
+                            <div class="prompt-text">Find relief for cough, congestion, and cold symptoms</div>
+                        </div>
+                        
+                        <div class="prompt-card" onclick="usePrompt('My allergies are acting up with sneezing')">
+                            <div class="prompt-title">Allergy Symptoms</div>
+                            <div class="prompt-text">Get help for allergy symptoms like sneezing and itchy eyes</div>
+                        </div>
+                        
+                        <div class="prompt-card" onclick="usePrompt('I have muscle pain after exercise')">
+                            <div class="prompt-title">Muscle Pain</div>
+                            <div class="prompt-text">Find relief for muscle soreness and pain</div>
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box" style="margin-top: 2rem;">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Important Reminder</h4>
+                        <p>Health Insight provides information only, not medical advice. Always consult with a healthcare professional before taking any medication. In case of emergency, call 911 immediately.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-brand">
+                <h2>Health Insight</h2>
+                <p>Your trusted AI-powered OTC medication recommendation platform. Always consult with healthcare professionals for medical advice.</p>
+                
+                <div class="footer-badges">
+                    <span class="badge">
+                        <i class="fas fa-check-circle"></i> Safe & Secure
+                    </span>
+                    <span class="badge">
+                        <i class="fas fa-heart"></i> Health First
+                    </span>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <div class="link-group">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="chat.html">Get Recommendations</a></li>
+                        <li><a href="medications.html">Browse Medications</a></li>
+                        <li><a href="about.html">How It Works</a></li>
+                        <li><a href="disclaimer.html">Safety Info</a></li>
+                    </ul>
+                </div>
+                
+                <div class="link-group">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="disclaimer.html">Medical Disclaimer</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="link-group">
+                    <h3>Emergency</h3>
+                    <ul>
+                        <li><strong>Emergency Services:</strong> 911</li>
+                        <li><strong>Suicide Prevention:</strong> 988</li>
+                        <li><strong>Poison Control:</strong> 800-222-1222</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Health Insight. This is not medical advice. Consult healthcare professionals.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js
