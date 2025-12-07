@@ -39,8 +39,9 @@
             background-color: white;
             color: var(--text-primary);
             overflow-x: hidden;
-            perspective: 1000px;
             line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
         }
         
         /* Enhanced 3D Parallax World */
@@ -60,28 +61,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            will-change: transform;
         }
         
         .layer-background {
             background: linear-gradient(135deg, #f9fbf8 0%, #eef7f6 100%);
             z-index: 1;
-            transform: translateZ(-1000px) scale(3);
-        }
-        
-        .layer-pills-1 {
-            z-index: 2;
-            transform: translateZ(-500px) scale(2);
-        }
-        
-        .layer-pills-2 {
-            z-index: 3;
-            transform: translateZ(-200px) scale(1.4);
-        }
-        
-        .layer-pills-3 {
-            z-index: 4;
-            transform: translateZ(0) scale(1);
         }
         
         /* Creative Pills with Blur Effect */
@@ -91,8 +75,6 @@
             filter: blur(var(--blur-amount));
             opacity: 0.4;
             transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-style: preserve-3d;
-            will-change: transform, filter, opacity;
             mix-blend-mode: multiply;
         }
         
@@ -196,7 +178,7 @@
             66% { transform: translate(-40px, -30px) rotate(-15deg); }
         }
         
-        /* Content Overlay with Blending */
+        /* Content Overlay */
         .content-overlay {
             position: relative;
             z-index: 100;
@@ -207,7 +189,7 @@
             flex-direction: column;
         }
         
-        /* GitHub-inspired Header */
+        /* Header */
         .header {
             position: fixed;
             top: 0;
@@ -216,7 +198,7 @@
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             z-index: 1000;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.3s ease;
             padding: 0 2rem;
         }
         
@@ -243,7 +225,7 @@
             font-weight: 800;
             font-size: 1.6rem;
             font-family: 'Poppins', sans-serif;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s ease;
         }
         
         .logo:hover {
@@ -279,7 +261,7 @@
             height: 3px;
             background: linear-gradient(90deg, var(--primary-accent), var(--teal));
             border-radius: 3px;
-            transition: width 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            transition: width 0.4s ease;
         }
         
         .nav-link:hover::before,
@@ -303,7 +285,7 @@
             font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s ease;
             border: none;
             text-decoration: none;
             display: inline-block;
@@ -352,13 +334,13 @@
             box-shadow: 0 12px 30px rgba(242, 180, 45, 0.4);
         }
         
-        /* Main Content Area */
+        /* Main Content */
         .main-content {
             flex: 1;
             padding-top: 80px;
         }
         
-        /* Hero Section - Fixed Alignment */
+        /* Hero Section - SIMPLIFIED */
         .hero {
             position: relative;
             min-height: 100vh;
@@ -385,13 +367,13 @@
         
         .hero-text {
             opacity: 0;
-            transform: translateY(40px) translateZ(100px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(40px);
+            transition: all 1s ease;
         }
         
         .hero-text.visible {
             opacity: 1;
-            transform: translateY(0) translateZ(0);
+            transform: translateY(0);
         }
         
         .hero-title {
@@ -415,73 +397,112 @@
             position: relative;
             height: 500px;
             width: 100%;
+            left:-12%;
             opacity: 0;
-            transform: translateX(40px) translateZ(100px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+            transform: translateX(40px);
+            transition: all 1s ease 0.2s;
         }
         
         .hero-visual.visible {
             opacity: 1;
-            transform: translateX(0) translateZ(0);
+            transform: translateX(0);
         }
         
-        /* 3D Floating Cards - IMPROVED ACCESSIBILITY */
+        /* FIXED: 3D Cards - Simple and Working */
         .cards-container {
             position: relative;
             width: 100%;
             height: 100%;
             min-height: 400px;
-            transform-style: preserve-3d;
-            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
         }
         
         .floating-card {
-            position: absolute;
+            position: relative;
             width: 280px;
             height: 380px;
             background-color: white;
             border-radius: 20px;
             box-shadow: var(--shadow-hard);
-            transform-style: preserve-3d;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             overflow: hidden;
             border: 1px solid var(--border-color);
             cursor: pointer;
-            z-index: 1;
+            transform-style: preserve-3d;
+            transform-origin: center center;
+            will-change: transform;
         }
         
-        .floating-card.card-1 {
-            top: 0;
-            left: 0;
-            transform: translateZ(0) rotateY(-10deg) rotateX(5deg);
-            z-index: 3;
+        /* Desktop: 3D effect with spacing */
+        @media (min-width: 1025px) {
+            .cards-container {
+                perspective: 1200px;
+            }
+            
+            .floating-card.card-1 {
+                transform: rotateY(-15deg) rotateX(5deg) translateZ(0);
+                margin-right: -40px;
+            }
+            
+            .floating-card.card-2 {
+                transform: rotateY(0deg) rotateX(0deg) translateZ(20px);
+                z-index: 2;
+            }
+            
+            .floating-card.card-3 {
+                transform: rotateY(15deg) rotateX(-5deg) translateZ(0);
+                margin-left: -40px;
+            }
+            
+            .floating-card:hover {
+                transform: rotateY(0deg) rotateX(0deg) translateZ(60px) !important;
+                z-index: 100 !important;
+                box-shadow: 0 35px 100px rgba(0, 0, 0, 0.25);
+            }
+            
+            /* When hovering one card, others move back slightly */
+            .cards-container:hover .floating-card:not(:hover) {
+                transform: translateZ(-20px) scale(0.95) !important;
+                filter: brightness(0.97);
+            }
         }
         
-        .floating-card.card-2 {
-            top: 30px;
-            left: 180px;
-            transform: translateZ(20px) rotateY(5deg) rotateX(2deg);
-            z-index: 2;
-        }
-        
-        .floating-card.card-3 {
-            top: 60px;
-            left: 360px;
-            transform: translateZ(40px) rotateY(15deg) rotateX(-3deg);
-            z-index: 1;
-        }
-        
-        .floating-card:hover {
-            transform: translateZ(50px) rotateY(0deg) rotateX(0deg) !important;
-            z-index: 100 !important;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        /* Mobile: Simple carousel */
+        @media (max-width: 1024px) {
+            .cards-container {
+                flex-direction: column;
+                gap: 20px;
+                height: auto;
+                min-height: 380px;
+            }
+            
+            .floating-card {
+                position: absolute;
+                width: 280px;
+                opacity: 0;
+                transform: translateX(100px) scale(0.9);
+                transition: all 0.5s ease;
+            }
+            
+            .floating-card.active-card {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                position: relative;
+            }
+            
+            .floating-card:not(.active-card) {
+                display: none;
+            }
         }
         
         .card-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s ease;
         }
         
         .floating-card:hover .card-image {
@@ -505,13 +526,35 @@
             margin-bottom: 1rem;
         }
         
-        /* Enhanced Search */
+        /* Card Navigation */
+        .card-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .card-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(89, 171, 169, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .card-dot.active {
+            background-color: var(--teal);
+            transform: scale(1.2);
+        }
+        
+        /* Search */
         .search-container {
             max-width: 800px;
             margin-top: 3rem;
             opacity: 0;
             transform: translateY(40px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+            transition: all 1s ease 0.4s;
         }
         
         .search-container.visible {
@@ -526,7 +569,7 @@
             overflow: hidden;
             box-shadow: var(--shadow-hard);
             border: 2px solid transparent;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s ease;
         }
         
         .search-box:hover {
@@ -579,7 +622,7 @@
             font-family: 'Poppins', sans-serif;
             opacity: 0;
             transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.8s ease;
         }
         
         .section-title.visible {
@@ -595,7 +638,7 @@
             margin: 0 auto 5rem;
             opacity: 0;
             transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+            transition: all 0.8s ease 0.2s;
         }
         
         .section-subtitle.visible {
@@ -603,7 +646,7 @@
             transform: translateY(0);
         }
         
-        /* OTC Categories - Fixed Alignment */
+        /* OTC Categories */
         .categories-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -618,7 +661,7 @@
             padding: 2.5rem;
             box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-color);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.4s ease;
             opacity: 0;
             transform: translateY(60px) scale(0.95);
             height: 100%;
@@ -694,7 +737,7 @@
             padding: 0 2rem;
             opacity: 0;
             transform: translateY(60px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 1s ease;
         }
         
         .parallax-content.visible {
@@ -734,89 +777,81 @@
             opacity: 0.9;
         }
         
-        /* Medication Grid - Fixed Alignment */
-        .medication-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2.5rem;
-            max-width: 1400px;
+        /* Misuse Information */
+        .misuse-container {
+            max-width: 1200px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
         }
         
-        .medication-card {
+        .misuse-card {
             background: var(--card-bg);
             border-radius: 20px;
-            overflow: hidden;
+            padding: 2.5rem;
             box-shadow: var(--shadow-soft);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid var(--border-color);
+            transition: all 0.4s ease;
             opacity: 0;
             transform: translateY(60px);
+            height: 100%;
         }
         
-        .medication-card.visible {
+        .misuse-card.visible {
             opacity: 1;
             transform: translateY(0);
         }
         
-        .medication-card:hover {
+        .misuse-card:hover {
             transform: translateY(-10px);
             box-shadow: var(--shadow-hard);
+            border-color: var(--teal);
         }
         
-        .medication-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .medication-card:hover .medication-image {
-            transform: scale(1.05);
-        }
-        
-        .medication-content {
-            padding: 2rem;
-        }
-        
-        .medication-name {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 0.8rem;
-            color: var(--dark-teal);
-        }
-        
-        .medication-brand {
-            font-size: 1rem;
-            color: var(--teal);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .medication-details {
-            display: flex;
-            justify-content: space-between;
+        .misuse-icon {
+            font-size: 3rem;
+            color: var(--primary-accent);
             margin-bottom: 1.5rem;
         }
         
-        .detail {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .detail-value {
-            font-size: 1.3rem;
+        .misuse-title {
+            font-size: 1.8rem;
             font-weight: 700;
+            margin-bottom: 1rem;
             color: var(--dark-teal);
         }
         
-        .detail-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 0.3rem;
+        .misuse-list {
+            list-style-type: none;
+            margin-top: 1.5rem;
         }
         
-        /* Footer - Fixed to bottom */
+        .misuse-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .misuse-list li::before {
+            content: '⚠️';
+            position: absolute;
+            left: 0;
+            top: 0.8rem;
+        }
+        
+        .warning-card {
+            background: linear-gradient(135deg, rgba(242, 180, 45, 0.1) 0%, rgba(242, 180, 45, 0.05) 100%);
+            border-color: var(--primary-accent);
+        }
+        
+        .warning-card .misuse-icon {
+            color: #d97706;
+        }
+        
+        /* Footer */
         .footer {
             background: linear-gradient(135deg, var(--dark-teal), rgb(40, 70, 20));
             color: white;
@@ -878,11 +913,6 @@
             transform: translateX(5px);
         }
         
-        /* External links have different styling */
-        .footer-links a[target="_blank"] {
-            position: relative;
-        }
-        
         .footer-links a[target="_blank"]::after {
             content: '↗';
             margin-left: 5px;
@@ -930,7 +960,7 @@
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
             transform: translateY(50px) scale(0.9);
             opacity: 0;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.4s ease;
         }
         
         .modal-overlay.active .modal-container {
@@ -955,44 +985,38 @@
             color: var(--dark-teal);
         }
         
-        /* Card Navigation */
-        .card-navigation {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            color: var(--dark-teal);
+            opacity: 0.7;
+            animation: bounce 2s infinite;
         }
         
-        .card-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: rgba(89, 171, 169, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .card-dot.active {
-            background-color: var(--teal);
-            transform: scale(1.2);
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-15px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-7px) translateX(-50%);
+            }
         }
         
         /* Responsive Design */
         @media (max-width: 1200px) {
-            .hero-grid {
-                gap: 3rem;
-            }
-            
             .hero-title {
                 font-size: 3rem;
             }
             
-            .floating-card.card-2 {
-                left: 160px;
-            }
-            
-            .floating-card.card-3 {
-                left: 320px;
+            .floating-card {
+                width: 240px;
             }
         }
         
@@ -1018,31 +1042,6 @@
             
             .search-container {
                 margin: 3rem auto 0;
-            }
-            
-            .cards-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 2rem;
-            }
-            
-            .floating-card {
-                position: relative;
-                top: 0 !important;
-                left: 0 !important;
-                transform: none !important;
-                margin: 0 1rem;
-                display: none;
-            }
-            
-            .floating-card.active-card {
-                display: block;
-                transform: translateZ(0) !important;
-            }
-            
-            .card-navigation {
-                display: flex;
             }
         }
         
@@ -1081,7 +1080,7 @@
             }
             
             .categories-container,
-            .medication-grid {
+            .misuse-container {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
@@ -1125,30 +1124,6 @@
             }
         }
         
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            color: var(--dark-teal);
-            opacity: 0.7;
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0) translateX(-50%);
-            }
-            40% {
-                transform: translateY(-15px) translateX(-50%);
-            }
-            60% {
-                transform: translateY(-7px) translateX(-50%);
-            }
-        }
-        
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
@@ -1172,23 +1147,17 @@
     <!-- Enhanced 3D Parallax World -->
     <div class="parallax-world">
         <div class="parallax-layer layer-background"></div>
-        <div class="parallax-layer layer-pills-1">
-            <div class="parallax-pill pill-1"></div>
-            <div class="parallax-pill pill-4"></div>
-        </div>
-        <div class="parallax-layer layer-pills-2">
-            <div class="parallax-pill pill-2"></div>
-            <div class="parallax-pill pill-5"></div>
-        </div>
-        <div class="parallax-layer layer-pills-3">
-            <div class="parallax-pill pill-3"></div>
-            <div class="parallax-pill pill-6"></div>
-        </div>
+        <div class="parallax-pill pill-1"></div>
+        <div class="parallax-pill pill-2"></div>
+        <div class="parallax-pill pill-3"></div>
+        <div class="parallax-pill pill-4"></div>
+        <div class="parallax-pill pill-5"></div>
+        <div class="parallax-pill pill-6"></div>
     </div>
 
     <!-- Content Overlay -->
     <div class="content-overlay">
-        <!-- Fixed Header -->
+        <!-- Header -->
         <header class="header" id="header">
             <div class="header-container">
                 <a href="#" class="logo">
@@ -1199,7 +1168,7 @@
                 <nav class="nav-links">
                     <a href="#home" class="nav-link active">Home</a>
                     <a href="#categories" class="nav-link">Categories</a>
-                    <a href="#medications" class="nav-link">Medications</a>
+                    <a href="#misuse" class="nav-link">Safe Use</a>
                     <a href="#sources" class="nav-link">Sources</a>
                     <a href="#about" class="nav-link">About</a>
                 </nav>
@@ -1358,94 +1327,61 @@
                 </div>
             </section>
 
-            <!-- Popular Medications Section -->
-            <section class="section" id="medications" style="background-color: var(--light-bg);">
-                <h2 class="section-title">Popular OTC Medications</h2>
-                <p class="section-subtitle">Detailed information about commonly used over-the-counter medications.</p>
+            <!-- OTC Medication Misuse Information -->
+            <section class="section" id="misuse" style="background-color: var(--light-bg);">
+                <h2 class="section-title">Safe Use of OTC Medications</h2>
+                <p class="section-subtitle">Important information about proper OTC medication use and common misuse risks.</p>
                 
-                <div class="medication-grid">
-                    <div class="medication-card">
-                        <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Ibuprofen" class="medication-image">
-                        <div class="medication-content">
-                            <h3 class="medication-name">Ibuprofen</h3>
-                            <div class="medication-brand">Advil, Motrin</div>
-                            <p>Nonsteroidal anti-inflammatory drug (NSAID) used to reduce fever and treat pain or inflammation.</p>
-                            
-                            <div class="medication-details">
-                                <div class="detail">
-                                    <div class="detail-value">200-800mg</div>
-                                    <div class="detail-label">Dosage</div>
-                                </div>
-                                <div class="detail">
-                                    <div class="detail-value">4-6 hrs</div>
-                                    <div class="detail-label">Duration</div>
-                                </div>
-                                <div class="detail">
-                                    <div class="detail-value">NSAID</div>
-                                    <div class="detail-label">Class</div>
-                                </div>
-                            </div>
-                            
-                            <button class="btn btn-primary" style="width: 100%;">View Details</button>
+                <div class="misuse-container">
+                    <div class="misuse-card">
+                        <div class="misuse-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
                         </div>
+                        <h3 class="misuse-title">Common Misuse Risks</h3>
+                        <p>Over-the-counter medications are safe when used as directed, but misuse can lead to serious health problems.</p>
+                        <ul class="misuse-list">
+                            <li>Exceeding recommended dosages</li>
+                            <li>Using for longer than directed</li>
+                            <li>Taking multiple medications with same active ingredients</li>
+                            <li>Ignoring age restrictions</li>
+                            <li>Mixing with alcohol or other substances</li>
+                        </ul>
                     </div>
                     
-                    <div class="medication-card">
-                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Acetaminophen" class="medication-image">
-                        <div class="medication-content">
-                            <h3 class="medication-name">Acetaminophen</h3>
-                            <div class="medication-brand">Tylenol</div>
-                            <p>Used to treat mild to moderate pain and to reduce fever. Not an anti-inflammatory.</p>
-                            
-                            <div class="medication-details">
-                                <div class="detail">
-                                    <div class="detail-value">325-1000mg</div>
-                                    <div class="detail-label">Dosage</div>
-                                </div>
-                                <div class="detail">
-                                    <div class="detail-value">4-6 hrs</div>
-                                    <div class="detail-label">Duration</div>
-                                </div>
-                                <div class="detail">
-                                    <div class="detail-value">Analgesic</div>
-                                    <div class="detail-label">Class</div>
-                                </div>
-                            </div>
-                            
-                            <button class="btn btn-primary" style="width: 100%;">View Details</button>
+                    <div class="misuse-card warning-card">
+                        <div class="misuse-icon">
+                            <i class="fas fa-pills"></i>
                         </div>
+                        <h3 class="misuse-title">Dosage Guidelines</h3>
+                        <p>Always follow label instructions carefully. Common dosage mistakes include:</p>
+                        <ul class="misuse-list">
+                            <li>Taking more frequent doses than recommended</li>
+                            <li>Doubling up on missed doses</li>
+                            <li>Using adult doses for children</li>
+                            <li>Not using proper measuring devices</li>
+                            <li>Continuing use beyond recommended duration</li>
+                        </ul>
                     </div>
                     
-                    <div class="medication-card">
-                        <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Loratadine" class="medication-image">
-                        <div class="medication-content">
-                            <h3 class="medication-name">Loratadine</h3>
-                            <div class="medication-brand">Claritin</div>
-                            <p>Antihistamine that reduces the effects of natural chemical histamine in the body.</p>
-                            
-                            <div class="medication-details">
-                                <div class="detail">
-                                    <div class="detail-value">10mg</div>
-                                    <div class="detail-label">Dosage</div>
-                                </div>
-                                <div class="detail">
-                                    <div class="detail-value">24 hrs</div>
-                                    <div class="detail-label">Duration</div>
-                                </div>
-                                <div class="detail">
-                                    <div class="detail-value">Antihistamine</div>
-                                    <div class="detail-label">Class</div>
-                                </div>
-                            </div>
-                            
-                            <button class="btn btn-primary" style="width: 100%;">View Details</button>
+                    <div class="misuse-card">
+                        <div class="misuse-icon">
+                            <i class="fas fa-user-md"></i>
                         </div>
+                        <h3 class="misuse-title">When to Consult a Doctor</h3>
+                        <p>Seek medical attention if you experience any of the following:</p>
+                        <ul class="misuse-list">
+                            <li>Symptoms persist beyond recommended treatment duration</li>
+                            <li>Severe side effects or allergic reactions</li>
+                            <li>Uncertain about medication interactions</li>
+                            <li>Underlying health conditions (liver, kidney, heart)</li>
+                            <li>Pregnant, breastfeeding, or giving to young children</li>
+                        </ul>
                     </div>
                 </div>
             </section>
         </div>
 
-        <!-- Footer - Fixed to bottom -->
+        <!-- Footer -->
         <footer class="footer" id="about">
             <div class="footer-content">
                 <div class="footer-section">
@@ -1461,7 +1397,7 @@
                     <ul class="footer-links">
                         <li><a href="#home">Home</a></li>
                         <li><a href="#categories">Medication Categories</a></li>
-                        <li><a href="#medications">Popular Medications</a></li>
+                        <li><a href="#misuse">Safe Use Guidelines</a></li>
                         <li><a href="#sources">Trusted Sources</a></li>
                     </ul>
                 </div>
@@ -1493,7 +1429,7 @@
         </footer>
     </div>
 
-    <!-- Empty Login/Signup Modal -->
+    <!-- Modal -->
     <div class="modal-overlay" id="loginModal">
         <div class="modal-container">
             <button class="close-modal" id="closeModal">&times;</button>
@@ -1502,61 +1438,163 @@
     </div>
 
     <script>
-        // Enhanced 3D Parallax Scroll Effect
+        // SIMPLIFIED AND WORKING SCRIPT
         document.addEventListener('DOMContentLoaded', function() {
-            // Enhanced mouse move parallax
-            document.addEventListener('mousemove', function(e) {
-                const x = (e.clientX - window.innerWidth / 2) / 100;
-                const y = (e.clientY - window.innerHeight / 2) / 100;
-                
-                // Move parallax layers
-                const layers = document.querySelectorAll('.parallax-layer');
-                layers.forEach((layer, index) => {
-                    const speed = 0.2 + (index * 0.1);
-                    const baseZ = [-1000, -500, -200, 0][index] || 0;
-                    const baseScale = [3, 2, 1.4, 1][index] || 1;
-                    layer.style.transform = `translateX(${x * speed}px) translateY(${y * speed}px) translateZ(${baseZ}px) scale(${baseScale})`;
+            // ====== FIXED CARD SYSTEM ======
+            const cards = document.querySelectorAll('.floating-card');
+            const cardDots = document.querySelectorAll('.card-dot');
+            
+            // Setup cards based on screen size
+            function setupCards() {
+                if (window.innerWidth > 1024) {
+                    // DESKTOP: Show all 3 cards with 3D effect
+                    setupDesktopCards();
+                } else {
+                    // MOBILE: Show one card at a time
+                    setupMobileCards();
+                }
+            }
+            
+            function setupDesktopCards() {
+                // Show all cards
+                cards.forEach(card => {
+                    card.style.display = 'block';
+                    card.classList.remove('active-card');
                 });
                 
-                // Move floating cards on desktop
-                if (window.innerWidth > 1024) {
-                    const cards = document.querySelectorAll('.floating-card');
-                    cards.forEach((card, index) => {
-                        const cardX = x * 0.5;
-                        const cardY = y * 0.5;
-                        const baseRotation = [10, 5, 15][index] || 0;
-                        const baseZ = [0, 20, 40][index] || 0;
-                        card.style.transform = `translateZ(${baseZ}px) rotateY(${cardX - baseRotation}deg) rotateX(${-cardY}deg)`;
+                // Add hover effects
+                cards.forEach(card => {
+                    card.addEventListener('mouseenter', function() {
+                        // Bring hovered card to front
+                        cards.forEach(c => {
+                            if (c !== this) c.style.zIndex = '1';
+                        });
+                        this.style.zIndex = '100';
                     });
+                    
+                    card.addEventListener('mouseleave', function() {
+                        // Reset z-index after delay
+                        setTimeout(() => {
+                            cards.forEach((c, idx) => {
+                                c.style.zIndex = (3 - idx).toString();
+                            });
+                        }, 300);
+                    });
+                });
+                
+                // Add subtle breathing animation
+                let time = 0;
+                function floatCards() {
+                    time += 0.001;
+                    
+                    cards.forEach((card, index) => {
+                        if (card.matches(':hover')) return;
+                        
+                        // Get current transform
+                        let transform = '';
+                        switch(index) {
+                            case 0:
+                                transform = `rotateY(-15deg) rotateX(5deg) translateZ(${Math.sin(time) * 3}px)`;
+                                break;
+                            case 1:
+                                transform = `rotateY(0deg) rotateX(0deg) translateZ(${Math.sin(time + 1) * 3}px)`;
+                                break;
+                            case 2:
+                                transform = `rotateY(15deg) rotateX(-5deg) translateZ(${Math.sin(time + 2) * 3}px)`;
+                                break;
+                        }
+                        
+                        card.style.transform = transform;
+                    });
+                    
+                    requestAnimationFrame(floatCards);
                 }
+                
+                floatCards();
+            }
+            
+            function setupMobileCards() {
+                // Show only first card
+                cards.forEach((card, index) => {
+                    if (index === 0) {
+                        card.classList.add('active-card');
+                        card.style.display = 'block';
+                        card.style.transform = 'translateX(0) scale(1)';
+                        card.style.opacity = '1';
+                    } else {
+                        card.classList.remove('active-card');
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Setup card navigation
+                cardDots.forEach(dot => {
+                    dot.addEventListener('click', function() {
+                        const cardNumber = this.getAttribute('data-card');
+                        
+                        // Update active dot
+                        cardDots.forEach(d => d.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Show selected card
+                        cards.forEach((card, index) => {
+                            card.classList.remove('active-card');
+                            card.style.display = 'none';
+                            card.style.opacity = '0';
+                            
+                            if (parseInt(cardNumber) === index + 1) {
+                                setTimeout(() => {
+                                    card.classList.add('active-card');
+                                    card.style.display = 'block';
+                                    setTimeout(() => {
+                                        card.style.opacity = '1';
+                                    }, 10);
+                                }, 10);
+                            }
+                        });
+                    });
+                });
+            }
+            
+            // Card click functionality
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    if (window.innerWidth <= 1024) {
+                        // On mobile, find which card was clicked
+                        const cardNum = Array.from(cards).indexOf(this) + 1;
+                        
+                        // Update dots
+                        cardDots.forEach((dot, index) => {
+                            dot.classList.toggle('active', (index + 1) === cardNum);
+                        });
+                        
+                        // Show clicked card
+                        cards.forEach(c => {
+                            c.classList.remove('active-card');
+                            c.style.display = 'none';
+                            c.style.opacity = '0';
+                        });
+                        
+                        this.classList.add('active-card');
+                        this.style.display = 'block';
+                        setTimeout(() => {
+                            this.style.opacity = '1';
+                        }, 10);
+                    } else {
+                        // On desktop, show alert
+                        const title = this.querySelector('.card-title').textContent;
+                        alert(`Exploring ${title} category...\n\nThis would navigate to detailed information about ${title} medications.`);
+                    }
+                });
             });
             
-            // Enhanced scroll parallax with more depth
+            // Initial card setup
+            setupCards();
+            window.addEventListener('resize', setupCards);
+            
+            // ====== PARALLAX SCROLL EFFECT ======
             window.addEventListener('scroll', function() {
                 const scrolled = window.pageYOffset;
-                
-                // Move parallax pills based on scroll with different speeds
-                const pills = document.querySelectorAll('.parallax-pill');
-                pills.forEach((pill, index) => {
-                    const speed = 0.2 + (index * 0.05);
-                    const yPos = -(scrolled * speed);
-                    const zPos = Math.sin(scrolled * 0.001 + index) * 20;
-                    pill.style.transform = `translateY(${yPos}px) translateZ(${zPos}px)`;
-                    
-                    // Adjust blur based on scroll position
-                    const scrollRatio = Math.min(scrolled / 1000, 1);
-                    const blurAmount = 8 - (scrollRatio * 4);
-                    pill.style.filter = `blur(${blurAmount}px)`;
-                    pill.style.opacity = 0.4 + (scrollRatio * 0.3);
-                });
-                
-                // Additional parallax for sections
-                const sections = document.querySelectorAll('.section, .info-parallax');
-                sections.forEach((section, index) => {
-                    const speed = 0.1 + (index * 0.02);
-                    const yPos = -(scrolled * speed);
-                    section.style.transform = `translateY(${yPos}px)`;
-                });
                 
                 // Header effect
                 const header = document.getElementById('header');
@@ -1565,24 +1603,27 @@
                 } else {
                     header.classList.remove('scrolled');
                 }
+                
+                // Move parallax pills
+                const pills = document.querySelectorAll('.parallax-pill');
+                pills.forEach((pill, index) => {
+                    const speed = 0.2 + (index * 0.05);
+                    const yPos = -(scrolled * speed);
+                    pill.style.transform = `translateY(${yPos}px)`;
+                });
             });
             
-            // Scroll reveal animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            };
-            
+            // ====== SCROLL REVEAL ANIMATIONS ======
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                         
-                        // Stagger animations for cards
+                        // Stagger animations for cards in sections
                         if (entry.target.classList.contains('categories-container') || 
-                            entry.target.classList.contains('medication-grid')) {
-                            const cards = entry.target.querySelectorAll('.category-card, .medication-card');
-                            cards.forEach((card, index) => {
+                            entry.target.classList.contains('misuse-container')) {
+                            const sectionCards = entry.target.querySelectorAll('.category-card, .misuse-card');
+                            sectionCards.forEach((card, index) => {
                                 setTimeout(() => {
                                     card.classList.add('visible');
                                 }, index * 150);
@@ -1590,135 +1631,62 @@
                         }
                     }
                 });
-            }, observerOptions);
+            }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
             
-            // Observe elements for animations
-            const animatedElements = document.querySelectorAll(
-                '.hero-text, .hero-visual, .search-container, .section-title, .section-subtitle, .categories-container, .parallax-content, .medication-grid'
-            );
+            // Observe elements
+            document.querySelectorAll('.hero-text, .hero-visual, .search-container, .section-title, .section-subtitle, .categories-container, .parallax-content, .misuse-container')
+                .forEach(element => observer.observe(element));
             
-            animatedElements.forEach(element => {
-                observer.observe(element);
-            });
-            
-            // Initialize hero animations
+            // Initial animations
             setTimeout(() => {
-                document.querySelector('.hero-text').classList.add('visible');
+                document.querySelector('.hero-text')?.classList.add('visible');
             }, 300);
             
             setTimeout(() => {
-                document.querySelector('.hero-visual').classList.add('visible');
+                document.querySelector('.hero-visual')?.classList.add('visible');
             }, 600);
             
             setTimeout(() => {
-                document.querySelector('.search-container').classList.add('visible');
+                document.querySelector('.search-container')?.classList.add('visible');
             }, 900);
             
-            // Card navigation for mobile
-            const cardDots = document.querySelectorAll('.card-dot');
-            const cards = document.querySelectorAll('.floating-card');
-            
-            cardDots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    const cardNumber = this.getAttribute('data-card');
-                    
-                    // Update active dot
-                    cardDots.forEach(d => d.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Show selected card on mobile
-                    if (window.innerWidth <= 1024) {
-                        cards.forEach(card => {
-                            card.classList.remove('active-card');
-                            if (card.classList.contains(`card-${cardNumber}`)) {
-                                card.classList.add('active-card');
-                            }
-                        });
-                    }
-                });
-            });
-            
-            // Auto-rotate cards on desktop
-            if (window.innerWidth > 1024) {
-                let rotation = 0;
-                function rotateCards() {
-                    rotation += 0.002;
-                    cards.forEach((card, index) => {
-                        const baseRotation = [10, 5, 15][index] || 0;
-                        const baseZ = [0, 20, 40][index] || 0;
-                        const wave = Math.sin(rotation + index) * 5;
-                        card.style.transform = `translateZ(${baseZ + wave}px) rotateY(${baseRotation + Math.sin(rotation + index) * 10}deg) rotateX(${Math.cos(rotation + index) * 3}deg)`;
-                    });
-                    requestAnimationFrame(rotateCards);
-                }
-                rotateCards();
-            }
-            
-            // Modal functionality
+            // ====== MODAL FUNCTIONALITY ======
             const loginModal = document.getElementById('loginModal');
             const openLoginModalBtn = document.getElementById('openLoginModal');
             const openSignupModalBtn = document.getElementById('openSignupModal');
             const closeModalBtn = document.getElementById('closeModal');
             
-            // Open modal for login
-            openLoginModalBtn.addEventListener('click', function() {
-                loginModal.classList.add('active');
+            openLoginModalBtn?.addEventListener('click', () => loginModal?.classList.add('active'));
+            openSignupModalBtn?.addEventListener('click', () => loginModal?.classList.add('active'));
+            closeModalBtn?.addEventListener('click', () => loginModal?.classList.remove('active'));
+            
+            loginModal?.addEventListener('click', (e) => {
+                if (e.target === loginModal) loginModal.classList.remove('active');
             });
             
-            // Open modal for signup
-            openSignupModalBtn.addEventListener('click', function() {
-                loginModal.classList.add('active');
-            });
-            
-            // Close modal
-            closeModalBtn.addEventListener('click', function() {
-                loginModal.classList.remove('active');
-            });
-            
-            // Close modal when clicking outside
-            loginModal.addEventListener('click', function(e) {
-                if (e.target === loginModal) {
-                    loginModal.classList.remove('active');
-                }
-            });
-            
-            // Search functionality
+            // ====== SEARCH FUNCTIONALITY ======
             const searchBtn = document.querySelector('.search-btn');
             const searchInput = document.querySelector('.search-input');
             
-            searchBtn.addEventListener('click', function() {
+            searchBtn?.addEventListener('click', function() {
                 const searchTerm = searchInput.value.trim();
                 if (searchTerm) {
-                    // Animate search box
                     const searchBox = document.querySelector('.search-box');
                     searchBox.style.transform = 'translateY(-5px)';
                     
                     setTimeout(() => {
                         searchBox.style.transform = '';
+                        alert(`Searching for "${searchTerm}" across 4,500+ OTC medications...\n\nThis is a frontend demonstration.`);
                     }, 300);
-                    
-                    // Show search results
-                    setTimeout(() => {
-                        alert(`Searching for "${searchTerm}" across 4,500+ OTC medications...\n\nThis is a frontend demonstration. In a full implementation, this would retrieve actual medication data from APIs.`);
-                    }, 500);
                 } else {
                     searchInput.focus();
                 }
             });
             
-            // Make floating cards clickable
-            cards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const title = this.querySelector('.card-title').textContent;
-                    alert(`Exploring ${title} category...\n\nThis would navigate to detailed information about ${title} medications.`);
-                });
-            });
-            
-            // Smooth scroll for navigation
+            // ====== SMOOTH SCROLL ======
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
                     
@@ -1730,15 +1698,13 @@
                         });
                         
                         // Update active nav link
-                        document.querySelectorAll('.nav-link').forEach(link => {
-                            link.classList.remove('active');
-                        });
+                        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
                         this.classList.add('active');
                     }
                 });
             });
             
-            // Interactive pills
+            // ====== INTERACTIVE PILLS ======
             const pills = document.querySelectorAll('.parallax-pill');
             pills.forEach(pill => {
                 pill.addEventListener('mouseenter', function() {
@@ -1747,7 +1713,7 @@
                 });
                 
                 pill.addEventListener('mouseleave', function() {
-                    this.style.filter = 'blur(8px)';
+                    this.style.filter = 'blur(var(--blur-amount))';
                     this.style.opacity = '0.4';
                 });
             });
