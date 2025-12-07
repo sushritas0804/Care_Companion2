@@ -398,7 +398,7 @@
             height: 500px;
             width: 100%;
             left:-12%;
-            opacity: 0;
+            opacity: 100%;
             transform: translateX(40px);
             transition: all 1s ease 0.2s;
         }
@@ -445,6 +445,7 @@
             .floating-card.card-1 {
                 transform: rotateY(-15deg) rotateX(5deg) translateZ(0);
                 margin-right: -40px;
+                
             }
             
             .floating-card.card-2 {
@@ -485,6 +486,7 @@
                 opacity: 0;
                 transform: translateX(100px) scale(0.9);
                 transition: all 0.5s ease;
+
             }
             
             .floating-card.active-card {
@@ -510,9 +512,22 @@
         }
         
         .card-content {
-            padding: 1.5rem;
+            padding: 1.5rem; 
         }
-        
+
+        @keyframes float {
+        0% {
+            transform: translateY(0); /* Start position: no vertical movement */
+        }
+        50% {
+            transform: translateY(-20px); /* Mid position: moves up by 20 pixels */
+        }
+        100% {
+            transform: translateY(0); /* End position: back to the start position */
+        }
+        }
+
+
         .card-title {
             font-size: 1.4rem;
             font-weight: 700;
@@ -1168,7 +1183,7 @@
                 <nav class="nav-links">
                     <a href="#home" class="nav-link active">Home</a>
                     <a href="#categories" class="nav-link">Categories</a>
-                    <a href="#misuse" class="nav-link">Safe Use</a>
+                    <a href="adviser.html" class="nav-link">Adviser</a>
                     <a href="#sources" class="nav-link">Sources</a>
                     <a href="#about" class="nav-link">About</a>
                 </nav>
