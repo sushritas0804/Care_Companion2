@@ -1,4 +1,4 @@
-#!/bin/bash
+m#!/bin/bash
 # setup-backend.sh - Creates the complete Node.js/Express backend for Care Companion
 
 echo "🚀 Setting up Care Companion Backend..."
