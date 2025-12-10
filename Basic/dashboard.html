@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard · Care Companion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-accent: #F2B42D;
+            --dark-teal: rgb(55, 85, 34);
+            --light-bg: rgb(255, 253, 230);
+            --teal: rgb(89, 171, 169);
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --text-primary: #1a1f36;
+            --text-secondary: #4a5568;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
+            --shadow-hard: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --blur-amount: 8px;
+            --sidebar-width: 320px;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: white;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Enhanced 3D Parallax World */
+        .parallax-world {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .layer-background {
+            background: linear-gradient(135deg, #f9fbf8 0%, #eef7f6 100%);
+            z-index: 1;
+        }
+        
+        /* Creative Pills with Blur Effect */
+        .parallax-pill {
+            position: absolute;
+            border-radius: 40px;
+            filter: blur(var(--blur-amount));
+            opacity: 0.4;
+            transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            mix-blend-mode: multiply;
+        }
+        
+        .parallax-pill:hover {
+            filter: blur(2px);
+            opacity: 0.8;
+        }
+        
+        .parallax-pill.pill-1 {
+            width: 180px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--teal), rgba(89, 171, 169, 0.6));
+            top: 15%;
+            left: 5%;
+            animation: float-1 20s infinite ease-in-out;
+        }
+        
+        .parallax-pill.pill-2 {
+            width: 120px;
+            height: 40px;
+            background: linear-gradient(45deg, var(--primary-accent), rgba(242, 180, 45, 0.6));
+            top: 40%;
+            right: 10%;
+            animation: float-2 25s infinite ease-in-out;
+        }
+        
+        .parallax-pill.pill-3 {
+            width: 100px;
+            height: 100px;
+            border-radius: 30px;
+            background: linear-gradient(45deg, var(--dark-teal), rgba(55, 85, 34, 0.6));
+            bottom: 30%;
+            left: 15%;
+            animation: float-3 30s infinite ease-in-out;
+        }
+        
+        .parallax-pill.pill-4 {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--teal), var(--primary-accent));
+            top: 60%;
+            right: 25%;
+            animation: float-4 22s infinite ease-in-out;
+        }
+        
+        .parallax-pill.pill-5 {
+            width: 140px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary-accent), rgba(242, 180, 45, 0.4));
+            bottom: 20%;
+            right: 5%;
+            animation: float-5 28s infinite ease-in-out;
+        }
+        
+        .parallax-pill.pill-6 {
+            width: 90px;
+            height: 90px;
+            border-radius: 20px;
+            background: linear-gradient(45deg, var(--dark-teal), rgba(55, 85, 34, 0.4));
+            top: 20%;
+            right: 30%;
+            animation: float-6 32s infinite ease-in-out;
+        }
+        
+        @keyframes float-1 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -40px) rotate(5deg); }
+            50% { transform: translate(60px, 20px) rotate(10deg); }
+            75% { transform: translate(20px, 50px) rotate(-5deg); }
+        }
+        
+        @keyframes float-2 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-50px, 30px) rotate(-8deg); }
+            66% { transform: translate(40px, -20px) rotate(12deg); }
+        }
+        
+        @keyframes float-3 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            20% { transform: translate(40px, -30px) rotate(15deg); }
+            40% { transform: translate(-30px, 40px) rotate(-10deg); }
+            60% { transform: translate(50px, 20px) rotate(20deg); }
+            80% { transform: translate(-20px, -40px) rotate(-15deg); }
+        }
+        
+        @keyframes float-4 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(60px, 40px) scale(1.3); }
+        }
+        
+        @keyframes float-5 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-60px, 30px) rotate(-12deg); }
+            75% { transform: translate(40px, -40px) rotate(12deg); }
+        }
+        
+        @keyframes float-6 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, 50px) rotate(15deg); }
+            66% { transform: translate(-40px, -30px) rotate(-15deg); }
+        }
+        
+        /* Content Overlay */
+        .content-overlay {
+            position: relative;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Floating 3D Sidebar - WIDER */
+        .sidebar-3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glass-border);
+            z-index: 1000;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        box-shadow 0.6s ease;
+            box-shadow: 20px 0 40px rgba(0, 0, 0, 0.1);
+            border-radius: 0 30px 30px 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-3d:hover {
+            transform: translateX(10px) rotateY(5deg);
+            box-shadow: 30px 0 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        .sidebar-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(242, 180, 45, 0.05) 0%,
+                rgba(89, 171, 169, 0.05) 50%,
+                rgba(55, 85, 34, 0.05) 100%);
+            z-index: -1;
+        }
+        
+        .sidebar-header {
+            padding: 1.8rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, 
+                rgba(55, 85, 34, 0.1) 0%,
+                rgba(89, 171, 169, 0.1) 100%);
+            transform-style: preserve-3d;
+            flex-shrink: 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--dark-teal);
+            font-weight: 800;
+            font-size: 1.5rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            transform: translateZ(20px);
+        }
+        
+        .logo:hover {
+            transform: translateZ(30px) scale(1.05);
+        }
+        
+        .logo-icon {
+            color: var(--primary-accent);
+            font-size: 1.8rem;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+        
+        .sidebar-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 0.5rem 0;
+        }
+        
+        .sidebar-nav {
+            padding: 0.5rem 0;
+            transform-style: preserve-3d;
+            flex-shrink: 0;
+        }
+        
+        .nav-item-3d {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            transform-style: preserve-3d;
+            margin: 0.3rem 1rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid transparent;
+        }
+        
+        .nav-item-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(242, 180, 45, 0.1) 0%,
+                rgba(89, 171, 169, 0.1) 100%);
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .nav-item-3d:hover {
+            transform: translateX(10px) translateZ(20px);
+            background: var(--glass-bg);
+            border-color: var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-item-3d:hover::before {
+            opacity: 1;
+        }
+        
+        .nav-item-3d.active {
+            background: linear-gradient(135deg, 
+                rgba(242, 180, 45, 0.2) 0%,
+                rgba(89, 171, 169, 0.2) 100%);
+            border-left: 4px solid var(--primary-accent);
+            transform: translateX(15px) translateZ(30px);
+            box-shadow: 0 15px 35px rgba(242, 180, 45, 0.2);
+        }
+        
+        .nav-item-3d i {
+            width: 24px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--teal);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item-3d.active i,
+        .nav-item-3d:hover i {
+            color: var(--primary-accent);
+            transform: scale(1.2);
+        }
+        
+        /* Recent Medications in Sidebar */
+        .sidebar-medications {
+            padding: 1rem 1.5rem;
+            margin: 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-medications:hover {
+            transform: translateZ(15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-medications-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            color: var(--dark-teal);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .sidebar-medications-title i {
+            color: var(--primary-accent);
+        }
+        
+        .sidebar-medication-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .sidebar-medication-item:hover {
+            transform: translateX(5px);
+            background: rgba(242, 180, 45, 0.1);
+            border-color: var(--primary-accent);
+        }
+        
+        .sidebar-medication-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--teal), rgba(89, 171, 169, 0.8));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        
+        .sidebar-medication-info {
+            flex: 1;
+        }
+        
+        .sidebar-medication-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dark-teal);
+            margin-bottom: 0.2rem;
+        }
+        
+        .sidebar-medication-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        .sidebar-medication-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary-accent);
+        }
+        
+        .sidebar-medication-status.due {
+            background: #ff6b6b;
+            animation: pulse 2s infinite;
+        }
+        
+        .sidebar-footer {
+            padding: 1.2rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            transform-style: preserve-3d;
+            background: linear-gradient(135deg, 
+                rgba(55, 85, 34, 0.1) 0%,
+                rgba(89, 171, 169, 0.05) 100%);
+            flex-shrink: 0;
+        }
+        
+        .user-profile-3d {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            padding: 0.8rem;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            transform-style: preserve-3d;
+        }
+        
+        .user-profile-3d:hover {
+            transform: translateY(-5px) translateZ(20px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, 
+                rgba(242, 180, 45, 0.1) 0%,
+                rgba(89, 171, 169, 0.1) 100%);
+        }
+        
+        .user-avatar-3d {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-accent);
+            box-shadow: 0 5px 15px rgba(242, 180, 45, 0.3);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .user-profile-3d:hover .user-avatar-3d {
+            transform: rotateY(180deg) scale(1.1);
+        }
+        
+        .user-info-summary h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+            color: var(--dark-teal);
+        }
+        
+        .user-info-summary p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Main Content - Adjusted for wider sidebar */
+        .main-content-3d {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            padding: 2rem;
+            transform-style: preserve-3d;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 3D Top Bar */
+        .top-bar-3d {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transform-style: preserve-3d;
+            animation: slideDown 0.6s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) translateZ(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) translateZ(0);
+            }
+        }
+        
+        .page-title-3d {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-teal);
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            transform: translateZ(20px);
+        }
+        
+        .top-actions-3d {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .notification-btn-3d {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--teal);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .notification-btn-3d:hover {
+            transform: translateY(-5px) rotateY(15deg);
+            background: linear-gradient(135deg, 
+                rgba(242, 180, 45, 0.1) 0%,
+                rgba(89, 171, 169, 0.1) 100%);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            color: var(--primary-accent);
+        }
+        
+        .notification-badge-3d {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, var(--primary-accent), #ff6b6b);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+        
+        .logout-btn-3d {
+            padding: 12px 28px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-accent), #e0a626);
+            color: var(--dark-teal);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transform-style: preserve-3d;
+            box-shadow: 0 8px 25px rgba(242, 180, 45, 0.3);
+        }
+        
+        .logout-btn-3d:hover {
+            transform: translateY(-5px) translateZ(20px);
+            box-shadow: 0 15px 35px rgba(242, 180, 45, 0.4);
+            background: linear-gradient(135deg, #ffc107, #e0a626);
+        }
+        
+        /* Dashboard Content */
+        .dashboard-grid-3d {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            transform-style: preserve-3d;
+        }
+        
+        /* Welcome Card */
+        .welcome-card-3d {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, 
+                rgba(242, 180, 45, 0.1) 0%,
+                rgba(89, 171, 169, 0.1) 100%);
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            transform-style: preserve-3d;
+            animation: floatIn 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+        
+        .welcome-card-3d::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, 
+                rgba(255, 255, 255, 0.3) 0%,
+                transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .welcome-title-3d {
+            font-size: 2.5rem;
+            color: var(--dark-teal);
+            margin-bottom: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .welcome-subtitle-3d {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Stats Cards */
+        .stat-card-3d {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(89, 171, 169, 0.1) 0%,
+                rgba(242, 180, 45, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .stat-card-3d:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stat-card-3d:hover::before {
+            opacity: 1;
+        }
+        
+        .stat-card-3d:nth-child(1) {
+            animation: floatIn 0.6s ease 0.2s both;
+        }
+        
+        .stat-card-3d:nth-child(2) {
+            animation: floatIn 0.6s ease 0.4s both;
+        }
+        
+        .stat-card-3d:nth-child(3) {
+            animation: floatIn 0.6s ease 0.6s both;
+        }
+        
+        .stat-icon-3d {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-card-3d:nth-child(2) .stat-icon-3d {
+            background: linear-gradient(135deg, 
+                rgba(242, 180, 45, 0.2) 0%,
+                rgba(242, 180, 45, 0.1) 100%);
+            color: var(--primary-accent);
+        }
+        
+        .stat-card-3d:nth-child(3) .stat-icon-3d {
+            background: linear-gradient(135deg, 
+                rgba(89, 171, 169, 0.2) 0%,
+                rgba(89, 171, 169, 0.1) 100%);
+            color: var(--teal);
+        }
+        
+        .stat-card-3d:nth-child(4) .stat-icon-3d {
+            background: linear-gradient(135deg, 
+                rgba(55, 85, 34, 0.2) 0%,
+                rgba(55, 85, 34, 0.1) 100%);
+            color: var(--dark-teal);
+        }
+        
+        .stat-info-3d h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark-teal);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-info-3d p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Profile Section */
+        .profile-section-3d {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--glass-border);
+            transform-style: preserve-3d;
+            animation: floatIn 0.8s ease 0.8s both;
+        }
+        
+        .section-header-3d {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title-3d {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-teal);
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-3d {
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: none;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .btn-3d:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary-3d {
+            background: linear-gradient(135deg, var(--primary-accent), #e0a626);
+            color: var(--dark-teal);
+            box-shadow: 0 8px 25px rgba(242, 180, 45, 0.3);
+        }
+        
+        .btn-primary-3d:hover {
+            transform: translateY(-5px) translateZ(20px);
+            box-shadow: 0 15px 35px rgba(242, 180, 45, 0.4);
+        }
+        
+        .profile-content-3d {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+        }
+        
+        @media (max-width: 1200px) {
+            .profile-content-3d {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .profile-avatar-section-3d {
+            text-align: center;
+            transform-style: preserve-3d;
+        }
+        
+        .profile-avatar-3d {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid transparent;
+            background: linear-gradient(135deg, var(--primary-accent), var(--teal)) border-box;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) padding-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            margin-bottom: 1.5rem;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .profile-avatar-3d:hover {
+            transform: scale(1.05) rotateY(15deg);
+            box-shadow: 0 25px 50px rgba(242, 180, 45, 0.3);
+        }
+        
+        .profile-details-3d {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .detail-item-3d {
+            margin-bottom: 1.5rem;
+            transform-style: preserve-3d;
+        }
+        
+        .detail-label-3d {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: block;
+            font-weight: 500;
+        }
+        
+        .detail-value-3d {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-teal);
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+        
+        .detail-value-3d:hover {
+            transform: translateX(10px) translateZ(10px);
+            background: rgba(242, 180, 45, 0.1);
+            border-color: var(--primary-accent);
+            box-shadow: 0 10px 25px rgba(242, 180, 45, 0.1);
+        }
+        
+        /* Footer */
+        .dashboard-footer {
+            margin-top: auto;
+            padding-top: 2rem;
+        }
+        
+        .footer-3d {
+            background: linear-gradient(135deg, var(--dark-teal), rgb(40, 70, 20));
+            color: white;
+            padding: 3rem 2rem 2rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+        
+        .footer-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .footer-content-3d {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-section-3d h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary-accent);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .footer-section-3d p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .footer-links-3d {
+            list-style: none;
+        }
+        
+        .footer-links-3d li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links-3d a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links-3d a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-links-3d a[target="_blank"]::after {
+            content: '↗';
+            margin-left: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .copyright-3d {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Medications Grid */
+        .medications-grid-3d {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .medication-card-3d {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        
+        .medication-card-3d:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .medication-header-3d {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, 
+                rgba(89, 171, 169, 0.2) 0%,
+                rgba(89, 171, 169, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .medication-icon-3d {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--teal), rgba(89, 171, 169, 0.8));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+        
+        .medication-card-3d:hover .medication-icon-3d {
+            transform: rotateY(180deg);
+        }
+        
+        .medication-name-3d {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-teal);
+        }
+        
+        .medication-body-3d {
+            padding: 1.5rem;
+        }
+        
+        .medication-detail-3d {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .medication-detail-3d:last-child {
+            border-bottom: none;
+        }
+        
+        /* 3D Modal */
+        .modal-overlay-3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 15, 26, 0.9);
+            backdrop-filter: blur(25px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .modal-overlay-3d.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-container-3d {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.4);
+            transform: translateY(100px) scale(0.8) rotateX(10deg);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .modal-overlay-3d.active .modal-container-3d {
+            transform: translateY(0) scale(1) rotateX(0);
+            opacity: 1;
+        }
+        
+        /* Mobile Sidebar Toggle */
+        .sidebar-toggle-3d {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-teal);
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar-3d {
+                transform: translateX(-100%);
+                width: 320px;
+            }
+            
+            .sidebar-3d.active {
+                transform: translateX(0);
+            }
+            
+            .main-content-3d {
+                margin-left: 0;
+            }
+            
+            .sidebar-toggle-3d {
+                display: block;
+            }
+            
+            .dashboard-grid-3d {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content-3d {
+                padding: 1rem;
+            }
+            
+            .top-bar-3d {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .page-title-3d {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-card-3d {
+                padding: 2rem;
+            }
+            
+            .welcome-title-3d {
+                font-size: 2rem;
+            }
+            
+            .profile-section-3d,
+            .medications-section-3d {
+                padding: 1.5rem;
+            }
+            
+            .profile-details-3d {
+                grid-template-columns: 1fr;
+            }
+            
+            .medications-grid-3d {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content-3d {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .btn-3d {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+            
+            .stat-info-3d h3 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--teal), var(--primary-accent));
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--primary-accent), var(--teal));
+        }
+        
+        /* Floating particles in dashboard */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--teal);
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: float-particle 20s infinite linear;
+        }
+        
+        @keyframes float-particle {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-100vh) translateX(100px);
+            }
+            50% {
+                transform: translateY(-50vh) translateX(-100px);
+            }
+            75% {
+                transform: translateY(-75vh) translateX(150px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced 3D Parallax World -->
+    <div class="parallax-world">
+        <div class="parallax-layer layer-background"></div>
+        <div class="parallax-pill pill-1"></div>
+        <div class="parallax-pill pill-2"></div>
+        <div class="parallax-pill pill-3"></div>
+        <div class="parallax-pill pill-4"></div>
+        <div class="parallax-pill pill-5"></div>
+        <div class="parallax-pill pill-6"></div>
+    </div>
+
+    <!-- Floating particles -->
+    <div class="floating-particles" id="floatingParticles"></div>
+
+    <!-- Content Overlay -->
+    <div class="content-overlay">
+        <!-- 3D Sidebar with Recent Medications -->
+        <aside class="sidebar-3d" id="sidebar3D">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-heartbeat logo-icon"></i>
+                    Care Companion
+                </a>
+            </div>
+            
+            <div class="sidebar-content">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item-3d active">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item-3d">
+                        <i class="fas fa-pills"></i>
+                        <span>My Medications</span>
+                    </a>
+                    <a href="#" class="nav-item-3d">
+                        <i class="fas fa-bell"></i>
+                        <span>Reminders</span>
+                    </a>
+                    <a href="#" class="nav-item-3d">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                    </a>
+                    <a href="#" class="nav-item-3d">
+                        <i class="fas fa-history"></i>
+                        <span>History</span>
+                    </a>
+                    <a href="#" class="nav-item-3d">
+                        <i class="fas fa-user-md"></i>
+                        <span>Health Profile</span>
+                    </a>
+                    <a href="#" class="nav-item-3d">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+                
+                <!-- Recent Medications in Sidebar -->
+                <div class="sidebar-medications">
+                    <div class="sidebar-medications-title">
+                        <i class="fas fa-clock"></i>
+                        <span>Recent Medications</span>
+                    </div>
+                    
+                    <div class="sidebar-medication-list">
+                        <div class="sidebar-medication-item" data-medication="ibuprofen">
+                            <div class="sidebar-medication-icon">
+                                <i class="fas fa-head-side-virus"></i>
+                            </div>
+                            <div class="sidebar-medication-info">
+                                <div class="sidebar-medication-name">Ibuprofen</div>
+                                <div class="sidebar-medication-time">8:30 AM • 200mg</div>
+                            </div>
+                            <div class="sidebar-medication-status due"></div>
+                        </div>
+                        
+                        <div class="sidebar-medication-item" data-medication="loratadine">
+                            <div class="sidebar-medication-icon">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <div class="sidebar-medication-info">
+                                <div class="sidebar-medication-name">Loratadine</div>
+                                <div class="sidebar-medication-time">7:00 PM • 10mg</div>
+                            </div>
+                            <div class="sidebar-medication-status"></div>
+                        </div>
+                        
+                        <div class="sidebar-medication-item" data-medication="omeprazole">
+                            <div class="sidebar-medication-icon">
+                                <i class="fas fa-stomach"></i>
+                            </div>
+                            <div class="sidebar-medication-info">
+                                <div class="sidebar-medication-name">Omeprazole</div>
+                                <div class="sidebar-medication-time">7:30 AM • 20mg</div>
+                            </div>
+                            <div class="sidebar-medication-status"></div>
+                        </div>
+                        
+                        <div class="sidebar-medication-item" data-medication="vitaminc">
+                            <div class="sidebar-medication-icon">
+                                <i class="fas fa-apple-alt"></i>
+                            </div>
+                            <div class="sidebar-medication-info">
+                                <div class="sidebar-medication-name">Vitamin C</div>
+                                <div class="sidebar-medication-time">9:00 AM • 500mg</div>
+                            </div>
+                            <div class="sidebar-medication-status"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile-3d" id="userProfile3D">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="User" class="user-avatar-3d">
+                    <div class="user-info-summary">
+                        <h4 id="sidebarUserName">Alex Johnson</h4>
+                        <p>View Profile</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <div class="main-content-3d">
+            <!-- 3D Top Bar -->
+            <header class="top-bar-3d">
+                <button class="sidebar-toggle-3d" id="sidebarToggle3D">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <h1 class="page-title-3d">Dashboard</h1>
+                
+                <div class="top-actions-3d">
+                    <button class="notification-btn-3d" id="notificationBtn3D">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge-3d"></span>
+                    </button>
+                    <button class="logout-btn-3d" id="logoutBtn3D">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Dashboard Content -->
+            <div class="dashboard-grid-3d">
+                <!-- Welcome Card -->
+                <div class="welcome-card-3d">
+                    <h2 class="welcome-title-3d" id="welcomeUserName">Welcome back, Alex!</h2>
+                    <p class="welcome-subtitle-3d">Your health information and medication dashboard. Everything you need in one place.</p>
+                    <button class="btn-3d btn-primary-3d" id="quickSearchBtn3D">
+                        <i class="fas fa-search"></i> Search Medications
+                    </button>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="stat-card-3d">
+                    <div class="stat-icon-3d">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="stat-info-3d">
+                        <h3 id="medCount">8</h3>
+                        <p>Active Medications</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card-3d">
+                    <div class="stat-icon-3d">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="stat-info-3d">
+                        <h3 id="reminderCount">3</h3>
+                        <p>Active Reminders</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card-3d">
+                    <div class="stat-icon-3d">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-info-3d">
+                        <h3 id="favoriteCount">12</h3>
+                        <p>Saved Medications</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Section -->
+            <section class="profile-section-3d">
+                <div class="section-header-3d">
+                    <h2 class="section-title-3d">My Profile</h2>
+                    <button class="btn-3d btn-primary-3d" id="editProfileBtn3D">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                </div>
+                
+                <div class="profile-content-3d">
+                    <div class="profile-avatar-section-3d">
+                        <div class="avatar-upload-3d">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Profile" class="profile-avatar-3d" id="profileAvatar3D">
+                        </div>
+                        <h3 id="profileName">Alex Johnson</h3>
+                        <p id="profileEmail">alex.johnson@example.com</p>
+                    </div>
+                    
+                    <div class="profile-details-3d">
+                        <div class="detail-item-3d">
+                            <label class="detail-label-3d">Full Name</label>
+                            <div class="detail-value-3d editable-3d" data-field="name" id="profileDetailName">
+                                Alex Johnson
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item-3d">
+                            <label class="detail-label-3d">Date of Birth</label>
+                            <div class="detail-value-3d editable-3d" data-field="dob" id="profileDetailDOB">
+                                March 15, 1985
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item-3d">
+                            <label class="detail-label-3d">Mobile Number</label>
+                            <div class="detail-value-3d editable-3d" data-field="mobile" id="profileDetailMobile">
+                                +1 (555) 123-4567
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item-3d">
+                            <label class="detail-label-3d">Email Address</label>
+                            <div class="detail-value-3d editable-3d" data-field="email" id="profileDetailEmail">
+                                alex.johnson@example.com
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item-3d">
+                            <label class="detail-label-3d">Address</label>
+                            <div class="detail-value-3d editable-3d" data-field="address" id="profileDetailAddress">
+                                123 Main Street, Apt 4B, New York, NY 10001
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item-3d">
+                            <label class="detail-label-3d">Emergency Contact</label>
+                            <div class="detail-value-3d editable-3d" data-field="emergency" id="profileDetailEmergency">
+                                Sarah Johnson (Spouse) +1 (555) 987-6543
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Recent Medications -->
+            <section class="profile-section-3d medications-section-3d">
+                <div class="section-header-3d">
+                    <h2 class="section-title-3d">All Medications</h2>
+                    <button class="btn-3d" style="background: linear-gradient(135deg, var(--teal), rgb(75, 151, 149)); color: white;" id="viewAllMedications">
+                        View All
+                    </button>
+                </div>
+                
+                <div class="medications-grid-3d">
+                    <div class="medication-card-3d">
+                        <div class="medication-header-3d">
+                            <div class="medication-icon-3d">
+                                <i class="fas fa-head-side-virus"></i>
+                            </div>
+                            <div>
+                                <h4 class="medication-name-3d">Ibuprofen</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Pain & Fever Relief</p>
+                            </div>
+                        </div>
+                        <div class="medication-body-3d">
+                            <div class="medication-detail-3d">
+                                <span class="medication-detail-label">Dosage</span>
+                                <span class="medication-detail-value">200mg</span>
+                            </div>
+                            <div class="medication-detail-3d">
+                                <span class="medication-detail-label">Frequency</span>
+                                <span class="medication-detail-value">Every 6 hours</span>
+                            </div>
+                            <div class="medication-detail-3d">
+                                <span class="medication-detail-label">Last Taken</span>
+                                <span class="medication-detail-value">Today, 8:30 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="medication-card-3d">
+                        <div class="medication-header-3d">
+                            <div class="medication-icon-3d">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <div>
+                                <h4 class="medication-name-3d">Loratadine</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Allergy Relief</p>
+                            </div>
+                        </div>
+                        <div class="medication-body-3d">
+                            <div class="medication-detail-3d">
+                                <span class="medication-detail-label">Dosage</span>
+                                <span class="medication-detail-value">10mg</span>
+                            </div>
+                            <div class="medication-detail-3d">
+                                <span class="medication-detail-label">Frequency</span>
+                                <span class="medication-detail-value">Once daily</span>
+                            </div>
+                            <div class="medication-detail-3d">
+                                <span class="medication-detail-label">Last Taken</span>
+                                <span class="medication-detail-value">Yesterday, 7:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="medication-card-3d">
+                        <div class="medication-header-3d">
+                            <div class="medication-icon-3d">
+                                <i class="fas fa-stomach"></i>
+                            </div>
+                            <div>
+                                <h4 class="medication-name-3d">Omeprazole</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Digestive Health</p>
+                            </div>
+                        </div>
+                        <div class="medication-body-3d">
+                            <div class="medication-detail-3d">
+                                <span class="medication-detail-label">Dosage</span>
+                                <span class="medication-detail-value">20mg</span>
+                            </div>
+                            <div class="medication-detail-3d">
+                                <span class="medication-detail-label">Frequency</span>
+                                <span class="medication-detail-value">Once daily</span>
+                            </div>
+                            <div class="medication-detail-3d">
+                                <span class="medication-detail-label">Last Taken</span>
+                                <span class="medication-detail-value">Today, 7:30 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Footer -->
+            <div class="dashboard-footer">
+                <footer class="footer-3d">
+                    <div class="footer-content-3d">
+                        <div class="footer-section-3d">
+                            <h3>Care Companion</h3>
+                            <p>Your trusted source for medication information. We provide comprehensive, accurate health data with 3D interactive interface.</p>
+                            <div style="margin-top: 1.5rem;">
+                                <button class="btn-3d" style="background: var(--primary-accent); color: var(--dark-teal);" onclick="window.location.href='index.html'">
+                                    Back to Home
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="footer-section-3d">
+                            <h3>Quick Links</h3>
+                            <ul class="footer-links-3d">
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="categories.html">Medication Categories</a></li>
+                                <li><a href="adviser.html">Health Adviser</a></li>
+                                <li><a href="index.html#sources">Trusted Sources</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-section-3d">
+                            <h3>Account</h3>
+                            <ul class="footer-links-3d">
+                                <li><a href="#login" id="footerLogin">Login</a></li>
+                                <li><a href="#signup" id="footerSignup">Sign Up</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Terms of Use</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-section-3d">
+                            <h3>Contact</h3>
+                            <ul class="footer-links-3d">
+                                <li><a href="mailto:info@carecompanion.com">info@carecompanion.com</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Medical Disclaimer</a></li>
+                                <li><a href="#">Report Issue</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="copyright-3d">
+                        <p>&copy; 2023 Care Companion. All information is for educational purposes only. Always consult a healthcare professional before taking any medication.</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay-3d" id="editModal3D">
+        <div class="modal-container-3d">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--teal), var(--dark-teal)); color: white;">
+                <h3 class="modal-title" id="modalTitle">Edit Profile</h3>
+                <button class="close-modal" id="closeEditModal3D" style="color: white;">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="profileForm3D">
+                    <div class="form-group">
+                        <label for="editName" class="form-label">Full Name</label>
+                        <input type="text" id="editName" class="form-control" placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editDOB" class="form-label">Date of Birth</label>
+                        <input type="date" id="editDOB" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editMobile" class="form-label">Mobile Number</label>
+                        <input type="tel" id="editMobile" class="form-control" placeholder="Enter your mobile number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editEmail" class="form-label">Email Address</label>
+                        <input type="email" id="editEmail" class="form-control" placeholder="Enter your email address">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editAddress" class="form-label">Address</label>
+                        <textarea id="editAddress" class="form-control" rows="3" placeholder="Enter your address"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editEmergency" class="form-label">Emergency Contact</label>
+                        <textarea id="editEmergency" class="form-control" rows="2" placeholder="Emergency contact name and number"></textarea>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-3d" style="background: transparent; border: 2px solid var(--teal); color: var(--teal);" id="cancelEdit3D">Cancel</button>
+                <button class="btn-3d btn-primary-3d" id="saveProfile3D">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('floatingParticles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const color = i % 3 === 0 ? 'var(--primary-accent)' : 
+                             i % 3 === 1 ? 'var(--teal)' : 'var(--dark-teal)';
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 30 + 20;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}vw`;
+                particle.style.top = `${posY}vh`;
+                particle.style.background = color;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // User data with medication information
+        let userData = {
+            name: "Alex Johnson",
+            email: "alex.johnson@example.com",
+            dob: "1985-03-15",
+            mobile: "+1 (555) 123-4567",
+            address: "123 Main Street, Apt 4B, New York, NY 10001",
+            emergency: "Sarah Johnson (Spouse) +1 (555) 987-6543",
+            avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            medicationCount: 8,
+            reminderCount: 3,
+            favoriteCount: 12,
+            recentMedications: [
+                {
+                    name: "Ibuprofen",
+                    type: "Pain & Fever Relief",
+                    dosage: "200mg",
+                    time: "8:30 AM",
+                    icon: "fas fa-head-side-virus",
+                    status: "due"
+                },
+                {
+                    name: "Loratadine",
+                    type: "Allergy Relief",
+                    dosage: "10mg",
+                    time: "7:00 PM",
+                    icon: "fas fa-wind",
+                    status: "taken"
+                },
+                {
+                    name: "Omeprazole",
+                    type: "Digestive Health",
+                    dosage: "20mg",
+                    time: "7:30 AM",
+                    icon: "fas fa-stomach",
+                    status: "taken"
+                },
+                {
+                    name: "Vitamin C",
+                    type: "Immune Support",
+                    dosage: "500mg",
+                    time: "9:00 AM",
+                    icon: "fas fa-apple-alt",
+                    status: "pending"
+                }
+            ]
+        };
+        
+        // DOM Elements
+        const sidebar3D = document.getElementById('sidebar3D');
+        const sidebarToggle3D = document.getElementById('sidebarToggle3D');
+        const editProfileBtn3D = document.getElementById('editProfileBtn3D');
+        const editModal3D = document.getElementById('editModal3D');
+        const closeEditModal3D = document.getElementById('closeEditModal3D');
+        const cancelEdit3D = document.getElementById('cancelEdit3D');
+        const saveProfile3D = document.getElementById('saveProfile3D');
+        const profileForm3D = document.getElementById('profileForm3D');
+        const logoutBtn3D = document.getElementById('logoutBtn3D');
+        const quickSearchBtn3D = document.getElementById('quickSearchBtn3D');
+        const notificationBtn3D = document.getElementById('notificationBtn3D');
+        const userProfile3D = document.getElementById('userProfile3D');
+        const profileAvatar3D = document.getElementById('profileAvatar3D');
+        const viewAllMedications = document.getElementById('viewAllMedications');
+        const footerLogin = document.getElementById('footerLogin');
+        const footerSignup = document.getElementById('footerSignup');
+        
+        // Format date for display
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        // Load user data into the UI
+        function loadUserData() {
+            document.getElementById('sidebarUserName').textContent = userData.name;
+            document.getElementById('welcomeUserName').textContent = `Welcome back, ${userData.name.split(' ')[0]}!`;
+            document.getElementById('profileName').textContent = userData.name;
+            document.getElementById('profileEmail').textContent = userData.email;
+            profileAvatar3D.src = userData.avatar;
+            
+            document.getElementById('profileDetailName').textContent = userData.name;
+            document.getElementById('profileDetailDOB').textContent = formatDate(userData.dob);
+            document.getElementById('profileDetailMobile').textContent = userData.mobile;
+            document.getElementById('profileDetailEmail').textContent = userData.email;
+            document.getElementById('profileDetailAddress').textContent = userData.address;
+            document.getElementById('profileDetailEmergency').textContent = userData.emergency;
+            
+            document.getElementById('medCount').textContent = userData.medicationCount;
+            document.getElementById('reminderCount').textContent = userData.reminderCount;
+            document.getElementById('favoriteCount').textContent = userData.favoriteCount;
+            
+            document.getElementById('editName').value = userData.name;
+            document.getElementById('editDOB').value = userData.dob;
+            document.getElementById('editMobile').value = userData.mobile;
+            document.getElementById('editEmail').value = userData.email;
+            document.getElementById('editAddress').value = userData.address;
+            document.getElementById('editEmergency').value = userData.emergency;
+            
+            // Load recent medications
+            loadRecentMedications();
+        }
+        
+        // Load recent medications in sidebar
+        function loadRecentMedications() {
+            const medicationList = document.querySelector('.sidebar-medication-list');
+            medicationList.innerHTML = '';
+            
+            userData.recentMedications.forEach(med => {
+                const medItem = document.createElement('div');
+                medItem.className = 'sidebar-medication-item';
+                medItem.setAttribute('data-medication', med.name.toLowerCase());
+                
+                medItem.innerHTML = `
+                    <div class="sidebar-medication-icon">
+                        <i class="${med.icon}"></i>
+                    </div>
+                    <div class="sidebar-medication-info">
+                        <div class="sidebar-medication-name">${med.name}</div>
+                        <div class="sidebar-medication-time">${med.time} • ${med.dosage}</div>
+                    </div>
+                    <div class="sidebar-medication-status ${med.status === 'due' ? 'due' : ''}"></div>
+                `;
+                
+                medicationList.appendChild(medItem);
+            });
+            
+            // Add click event to medication items
+            document.querySelectorAll('.sidebar-medication-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const medName = this.getAttribute('data-medication');
+                    const medication = userData.recentMedications.find(m => 
+                        m.name.toLowerCase() === medName);
+                    
+                    if (medication) {
+                        alert(`Medication: ${medication.name}\nType: ${medication.type}\nDosage: ${medication.dosage}\nTime: ${medication.time}\nStatus: ${medication.status === 'due' ? 'Due for next dose' : 'Taken'}`);
+                    }
+                });
+            });
+        }
+        
+        // Parallax effect for pills
+        function updateParallax() {
+            const pills = document.querySelectorAll('.parallax-pill');
+            const scrollY = window.scrollY;
+            
+            pills.forEach((pill, index) => {
+                const speed = 0.1 + (index * 0.02);
+                const yPos = -(scrollY * speed);
+                pill.style.transform = `translateY(${yPos}px)`;
+            });
+        }
+        
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create particles
+            createParticles();
+            
+            // Load user data
+            loadUserData();
+            
+            // Initialize parallax
+            updateParallax();
+            window.addEventListener('scroll', updateParallax);
+            
+            // Sidebar toggle for mobile
+            sidebarToggle3D.addEventListener('click', function() {
+                sidebar3D.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 1200 && 
+                    !sidebar3D.contains(event.target) && 
+                    !sidebarToggle3D.contains(event.target) && 
+                    sidebar3D.classList.contains('active')) {
+                    sidebar3D.classList.remove('active');
+                }
+            });
+            
+            // Edit profile button
+            editProfileBtn3D.addEventListener('click', function() {
+                editModal3D.classList.add('active');
+            });
+            
+            userProfile3D.addEventListener('click', function() {
+                editModal3D.classList.add('active');
+            });
+            
+            // Editable profile fields
+            document.querySelectorAll('.editable-3d').forEach(field => {
+                field.addEventListener('click', function() {
+                    const fieldName = this.getAttribute('data-field');
+                    editModal3D.classList.add('active');
+                    
+                    setTimeout(() => {
+                        const inputId = `edit${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`;
+                        const inputField = document.getElementById(inputId);
+                        if (inputField) {
+                            inputField.focus();
+                            inputField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 400);
+                });
+            });
+            
+            // Footer navigation
+            footerLogin?.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Redirecting to login page...');
+                // In real app: window.location.href = 'login.html';
+            });
+            
+            footerSignup?.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Redirecting to signup page...');
+                // In real app: window.location.href = 'signup.html';
+            });
+            
+            // Close edit modal
+            closeEditModal3D.addEventListener('click', function() {
+                editModal3D.classList.remove('active');
+            });
+            
+            cancelEdit3D.addEventListener('click', function() {
+                editModal3D.classList.remove('active');
+            });
+            
+            editModal3D.addEventListener('click', function(event) {
+                if (event.target === editModal3D) {
+                    editModal3D.classList.remove('active');
+                }
+            });
+            
+            // Save profile changes
+            saveProfile3D.addEventListener('click', function() {
+                userData.name = document.getElementById('editName').value;
+                userData.dob = document.getElementById('editDOB').value;
+                userData.mobile = document.getElementById('editMobile').value;
+                userData.email = document.getElementById('editEmail').value;
+                userData.address = document.getElementById('editAddress').value;
+                userData.emergency = document.getElementById('editEmergency').value;
+                
+                loadUserData();
+                
+                // Animate save button
+                this.innerHTML = '<i class="fas fa-check"></i> Saved!';
+                this.style.background = 'linear-gradient(135deg, var(--teal), var(--dark-teal))';
+                
+                setTimeout(() => {
+                    this.innerHTML = 'Save Changes';
+                    this.style.background = '';
+                    editModal3D.classList.remove('active');
+                }, 1000);
+            });
+            
+            // Logout functionality
+            logoutBtn3D.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging out...';
+                
+                setTimeout(() => {
+                    alert('Logged out successfully! Redirecting to login...');
+                    // In real app: window.location.href = 'login.html';
+                    this.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+                }, 1500);
+            });
+            
+            // Quick search button
+            quickSearchBtn3D.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-search"></i> Searching...';
+                setTimeout(() => {
+                    alert('Opening medication search interface...');
+                    this.innerHTML = '<i class="fas fa-search"></i> Search Medications';
+                }, 1000);
+            });
+            
+            // Notification button
+            notificationBtn3D.addEventListener('click', function() {
+                this.style.transform = 'rotate(360deg)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                    alert('You have 3 new notifications:\n1. Reminder: Take Ibuprofen at 2:00 PM\n2. New medication interaction alert\n3. Profile update successful');
+                }, 500);
+            });
+            
+            // View all medications
+            viewAllMedications.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                setTimeout(() => {
+                    alert('Opening all medications view...');
+                    this.innerHTML = 'View All';
+                }, 1000);
+            });
+            
+            // Sidebar navigation
+            document.querySelectorAll('.nav-item-3d').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    document.querySelectorAll('.nav-item-3d').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    if (window.innerWidth <= 1200) {
+                        sidebar3D.classList.remove('active');
+                    }
+                    
+                    const pageName = this.querySelector('span').textContent;
+                    if (pageName !== 'Dashboard') {
+                        // Animate card exit
+                        const cards = document.querySelectorAll('.stat-card-3d, .profile-section-3d');
+                        cards.forEach(card => {
+                            card.style.transform = 'translateY(100px)';
+                            card.style.opacity = '0';
+                        });
+                        
+                        setTimeout(() => {
+                            alert(`Loading ${pageName} page...`);
+                            cards.forEach(card => {
+                                card.style.transform = '';
+                                card.style.opacity = '';
+                            });
+                        }, 300);
+                    }
+                });
+            });
+            
+            // Avatar hover effect
+            profileAvatar3D.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1) rotateY(20deg)';
+            });
+            
+            profileAvatar3D.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotateY(0)';
+            });
+            
+            // 3D card hover effects
+            document.querySelectorAll('.stat-card-3d, .medication-card-3d').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const rect = this.getBoundingClientRect();
+                    const x = ((rect.left + rect.width / 2) - window.innerWidth / 2) / 50;
+                    const y = ((rect.top + rect.height / 2) - window.innerHeight / 2) / 50;
+                    
+                    this.style.transform = `perspective(1000px) rotateX(${-y}deg) rotateY(${x}deg) translateZ(30px)`;
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Escape to close modals
+                if (e.key === 'Escape') {
+                    editModal3D.classList.remove('active');
+                }
+                
+                // Ctrl + E to edit profile
+                if (e.ctrlKey && e.key === 'e') {
+                    e.preventDefault();
+                    editModal3D.classList.add('active');
+                }
+                
+                // Ctrl + L to logout
+                if (e.ctrlKey && e.key === 'l') {
+                    e.preventDefault();
+                    logoutBtn3D.click();
+                }
+                
+                // Ctrl + M to focus medication search
+                if (e.ctrlKey && e.key === 'm') {
+                    e.preventDefault();
+                    quickSearchBtn3D.focus();
+                }
+            });
+            
+            // Initialize with sidebar closed on mobile
+            if (window.innerWidth <= 1200) {
+                sidebar3D.classList.remove('active');
+            }
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 1200) {
+                    sidebar3D.classList.remove('active');
+                }
+            });
+            
+            // Add mouse parallax effect to sidebar
+            document.addEventListener('mousemove', function(e) {
+                if (window.innerWidth > 1200) {
+                    const x = (e.clientX / window.innerWidth - 0.5) * 10;
+                    const y = (e.clientY / window.innerHeight - 0.5) * 10;
+                    
+                    sidebar3D.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg) translateX(10px)`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

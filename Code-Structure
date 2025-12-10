@@ -1,0 +1,55 @@
+care-companion/
+├── frontend/
+│   ├── public/
+│   │   ├── index.html
+│   │   └── manifest.json
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Header.js
+│   │   │   ├── Footer.js
+│   │   │   ├── HeroSection.js
+│   │   │   ├── Categories.js
+│   │   │   ├── AdviserForm.js
+│   │   │   ├── AuthForm.js
+│   │   │   └── MedicationCard.js
+│   │   ├── pages/
+│   │   │   ├── Home.js
+│   │   │   ├── Adviser.js
+│   │   │   └── Auth.js
+│   │   ├── styles/
+│   │   │   ├── main.css
+│   │   │   ├── components.css
+│   │   │   └── animations.css
+│   │   ├── App.js
+│   │   ├── App.css
+│   │   └── index.js
+│   ├── package.json
+│   └── .env
+├── backend/
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Medication.js
+│   │   └── Recommendation.js
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── medications.js
+│   │   └── recommendations.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── medicationController.js
+│   │   └── recommendationController.js
+│   ├── config/
+│   │   └── database.js
+│   ├── middleware/
+│   │   └── auth.js
+│   ├── server.js
+│   ├── package.json
+│   └── .env
+├── database/
+│   ├── init-mongo.js
+│   └── medications-data.json
+├── scripts/
+│   ├── setup-frontend.sh
+│   ├── setup-backend.sh
+│   └── setup-database.sh
+└── README.md

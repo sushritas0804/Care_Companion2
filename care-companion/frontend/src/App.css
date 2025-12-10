@@ -1,0 +1,722 @@
+/* ============================================
+   CARECOMPANION STYLES - EXACT MATCH TO HTML
+   ============================================ */
+
+:root {
+  --primary-accent: #F2B42D;
+  --dark-teal: rgb(55, 85, 34);
+  --light-bg: rgb(255, 253, 230);
+  --teal: rgb(89, 171, 169);
+  --card-bg: rgba(255, 255, 255, 0.98);
+  --text-primary: #1a1f36;
+  --text-secondary: #4a5568;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
+  --shadow-hard: 0 20px 60px rgba(0, 0, 0, 0.15);
+  --blur-amount: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: white;
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Enhanced 3D Parallax World */
+.parallax-world {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.layer-background {
+  background: linear-gradient(135deg, #f9fbf8 0%, #eef7f6 100%);
+  z-index: 1;
+}
+
+/* Creative Pills with Blur Effect */
+.parallax-pill {
+  position: absolute;
+  border-radius: 40px;
+  filter: blur(var(--blur-amount));
+  opacity: 0.4;
+  transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  mix-blend-mode: multiply;
+}
+
+.parallax-pill:hover {
+  filter: blur(2px);
+  opacity: 0.8;
+}
+
+.parallax-pill.pill-1 {
+  width: 180px;
+  height: 60px;
+  background: linear-gradient(45deg, var(--teal), rgba(89, 171, 169, 0.6));
+  top: 15%;
+  left: 5%;
+  animation: float-1 20s infinite ease-in-out;
+}
+
+.parallax-pill.pill-2 {
+  width: 120px;
+  height: 40px;
+  background: linear-gradient(45deg, var(--primary-accent), rgba(242, 180, 45, 0.6));
+  top: 40%;
+  right: 10%;
+  animation: float-2 25s infinite ease-in-out;
+}
+
+.parallax-pill.pill-3 {
+  width: 100px;
+  height: 100px;
+  border-radius: 30px;
+  background: linear-gradient(45deg, var(--dark-teal), rgba(55, 85, 34, 0.6));
+  bottom: 30%;
+  left: 15%;
+  animation: float-3 30s infinite ease-in-out;
+}
+
+.parallax-pill.pill-4 {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, var(--teal), var(--primary-accent));
+  top: 60%;
+  right: 25%;
+  animation: float-4 22s infinite ease-in-out;
+}
+
+.parallax-pill.pill-5 {
+  width: 140px;
+  height: 50px;
+  background: linear-gradient(45deg, var(--primary-accent), rgba(242, 180, 45, 0.4));
+  bottom: 20%;
+  right: 5%;
+  animation: float-5 28s infinite ease-in-out;
+}
+
+.parallax-pill.pill-6 {
+  width: 90px;
+  height: 90px;
+  border-radius: 20px;
+  background: linear-gradient(45deg, var(--dark-teal), rgba(55, 85, 34, 0.4));
+  top: 20%;
+  right: 30%;
+  animation: float-6 32s infinite ease-in-out;
+}
+
+@keyframes float-1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(30px, -40px) rotate(5deg); }
+  50% { transform: translate(60px, 20px) rotate(10deg); }
+  75% { transform: translate(20px, 50px) rotate(-5deg); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(-50px, 30px) rotate(-8deg); }
+  66% { transform: translate(40px, -20px) rotate(12deg); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(40px, -30px) rotate(15deg); }
+  40% { transform: translate(-30px, 40px) rotate(-10deg); }
+  60% { transform: translate(50px, 20px) rotate(20deg); }
+  80% { transform: translate(-20px, -40px) rotate(-15deg); }
+}
+
+@keyframes float-4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 40px) scale(1.3); }
+}
+
+@keyframes float-5 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-60px, 30px) rotate(-12deg); }
+  75% { transform: translate(40px, -40px) rotate(12deg); }
+}
+
+@keyframes float-6 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, 50px) rotate(15deg); }
+  66% { transform: translate(-40px, -30px) rotate(-15deg); }
+}
+
+/* Content Overlay */
+.content-overlay {
+  position: relative;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  padding: 0 2rem;
+}
+
+.header.scrolled {
+  background-color: rgba(255, 255, 255, 0.98);
+  box-shadow: var(--shadow-soft);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--dark-teal);
+  font-weight: 800;
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  transform: translateY(-2px);
+}
+
+.logo-icon {
+  color: var(--primary-accent);
+  font-size: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.nav-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  padding: 8px 0;
+  transition: all 0.3s ease;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-accent), var(--teal));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+  width: 100%;
+}
+
+.nav-link:hover {
+  color: var(--dark-teal);
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn {
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.7s ease;
+  z-index: -1;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--dark-teal);
+  border: 2px solid var(--teal);
+}
+
+.btn-outline:hover {
+  background-color: rgba(89, 171, 169, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(89, 171, 169, 0.2);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-accent), #e0a626);
+  color: var(--dark-teal);
+  box-shadow: 0 6px 20px rgba(242, 180, 45, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(242, 180, 45, 0.4);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding-top: 80px;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: var(--dark-teal);
+  font-family: 'Poppins', sans-serif;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.hero-visual {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  left: -12%;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* FIXED: 3D Cards - Simple and Working */
+.cards-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.floating-card {
+  position: relative;
+  width: 280px;
+  height: 380px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow-hard);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Desktop: 3D effect with spacing */
+@media (min-width: 1025px) {
+  .cards-container {
+    perspective: 1200px;
+  }
+  
+  .floating-card.card-1 {
+    transform: rotateY(0deg) rotateX(0deg) translateZ(0);
+    margin-right: -40px;
+  }
+  
+  .floating-card.card-2 {
+    transform: rotateY(0deg) rotateX(0deg) translateZ(20px);
+    z-index: 2;
+  }
+  
+  .floating-card.card-3 {
+    transform: rotateY(0deg) rotateX(05deg) translateZ(0);
+    margin-left: -40px;
+  }
+  
+  .floating-card:hover {
+    transform: rotateY(0deg) rotateX(0deg) translateZ(60px) !important;
+    z-index: 100 !important;
+    box-shadow: 0 35px 100px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* When hovering one card, others move back slightly */
+  .cards-container:hover .floating-card:not(:hover) {
+    transform: translateZ(-20px) scale(0.95) !important;
+    filter: brightness(0.97);
+  }
+}
+
+/* Mobile: Simple carousel */
+@media (max-width: 1024px) {
+  .cards-container {
+    flex-direction: column;
+    gap: 20px;
+    height: auto;
+    min-height: 380px;
+  }
+  
+  .floating-card {
+    position: absolute;
+    width: 280px;
+    opacity: 0;
+    transform: translateX(100px) scale(0.9);
+    transition: all 0.5s ease;
+  }
+  
+  .floating-card.active-card {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    position: relative;
+  }
+  
+  .floating-card:not(.active-card) {
+    display: none;
+  }
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.floating-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.card-content {
+  padding: 1.5rem; 
+}
+
+.card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--dark-teal);
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+/* Card Navigation */
+.card-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.card-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(89, 171, 169, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card-dot.active {
+  background-color: var(--teal);
+  transform: scale(1.2);
+}
+
+/* Search */
+.search-container {
+  max-width: 800px;
+  margin-top: 3rem;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.search-box {
+  display: flex;
+  background-color: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-hard);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.search-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  border-color: var(--teal);
+}
+
+.search-input {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  background-color: transparent;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-btn {
+  background: linear-gradient(135deg, var(--teal), rgb(75, 151, 149));
+  color: white;
+  border: none;
+  padding: 0 3rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+  background: linear-gradient(135deg, rgb(75, 151, 149), var(--teal));
+}
+
+/* Section Styling */
+.section {
+  position: relative;
+  padding: 8rem 2rem;
+  overflow: hidden;
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--dark-teal);
+  font-family: 'Poppins', sans-serif;
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto 5rem;
+}
+
+/* Add the rest of your CSS here... 
+   I'm including the critical parts for now */
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .floating-card {
+    width: 240px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+  
+  .hero-visual {
+    height: 400px;
+    order: -1;
+  }
+  
+  .hero-title {
+    font-size: 2.8rem;
+  }
+  
+  .hero-subtitle {
+    margin: 0 auto 2.5rem;
+  }
+  
+  .search-container {
+    margin: 3rem auto 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 1rem;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .hero-visual {
+    height: 350px;
+  }
+  
+  .section {
+    padding: 5rem 1rem;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-visual {
+    height: 300px;
+  }
+  
+  .search-box {
+    flex-direction: column;
+  }
+  
+  .search-input {
+    padding: 1.2rem;
+  }
+  
+  .search-btn {
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--teal), var(--primary-accent));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(var(--primary-accent), var(--teal));
+}
